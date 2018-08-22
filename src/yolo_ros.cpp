@@ -24,8 +24,8 @@ void load_net(char *cfgfile, char *weightfile, float thresh, float hier);
 int get_obj_count();
 
 // define demo_yolo inputs
-char *cfg = "/home/catkin_ws/src/darknet_ros/cfg/yolo-voc.cfg";
-char *weights = "/home/catkin_ws/src/darknet_ros/weights/yolo-voc.weights";
+char *cfg = "/home/shrek/stroll-e/Yolo/catkin-ws/src/darknet_ros/weights/yolov2-tiny.cfg";
+char *weights = "/home/shrek/stroll-e/Yolo/catkin-ws/src/darknet_ros/weights/yolov2-tiny.weights";
 float thresh = 0.5;
 
 const std::string class_labels[] = { "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat",
