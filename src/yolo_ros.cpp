@@ -24,8 +24,8 @@ void load_net(char *cfgfile, char *weightfile, float thresh, float hier);
 int get_obj_count();
 
 // define demo_yolo inputs
-char *cfg = "/home/shrek/stroll-e/Yolo/catkin-ws/src/darknet_ros/weights/yolov2-tiny.cfg";
-char *weights = "/home/shrek/stroll-e/Yolo/catkin-ws/src/darknet_ros/weights/yolov2-tiny.weights";
+char *cfg = "/home/nvidia/catkin-ws/src/darknet_ros/weights/yolov2-tiny.cfg";
+char *weights = "/home/nvidia/catkin-ws/src/darknet_ros/weights/yolov2-tiny.weights";
 float thresh = 0.5;
 
 const std::string class_labels[] = { "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat",
@@ -36,9 +36,9 @@ const int num_classes = sizeof(class_labels)/sizeof(class_labels[0]);
 cv::Mat input_image;
 
 // define parameters
-const std::string CAMERA_TOPIC_NAME = "/usb_cam/image_raw";
-const std::string CAMERA_WIDTH_PARAM = "/usb_cam/image_width";
-const std::string CAMERA_HEIGHT_PARAM = "/usb_cam/image_height";
+const std::string CAMERA_TOPIC_NAME = "/zed/left/image_rect_color";
+const std::string CAMERA_WIDTH_PARAM = "672";  //672*376
+const std::string CAMERA_HEIGHT_PARAM = "376";
 const std::string OPENCV_WINDOW = "YOLO object detection";
 int FRAME_W;
 int FRAME_H;

@@ -1,0 +1,4 @@
+<launch>
+   <include file="$(find zed_wrapper)/launch/zed.launch"/>
+   <node pkg="darknet_ros" type="yolo_ros" name="yolo_ros"/>
+</launch>
