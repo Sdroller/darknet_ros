@@ -28,20 +28,101 @@ char *cfg = "/home/nvidia/catkin-ws/src/darknet_ros/weights/yolov2-tiny.cfg";
 char *weights = "/home/nvidia/catkin-ws/src/darknet_ros/weights/yolov2-tiny.weights";
 float thresh = 0.5;
 
-const std::string class_labels[] = { "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat",
-		     	             "chair", "cow", "dining table", "dog", "horse", "motorbike", "person",
-		                     "potted plant", "sheep", "sofa", "train", "tv monitor" };
+// const std::string class_labels[] = { "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat",
+// 		     	             "chair", "cow", "dining table", "dog", "horse", "motorbike", "person",
+// 		                     "potted plant", "sheep", "sofa", "train", "tv monitor" };
+const std::string class_labels[] = { "person", "bicycle",
+"car",
+"motorbike",
+"aeroplane",
+"bus",
+"train",
+"truck",
+"boat",
+"traffic light",
+"fire hydrant",
+"stop sign",
+"parking meter",
+"bench",
+"bird",
+"cat",
+"dog",
+"horse",
+"sheep",
+"cow",
+"elephant",
+"bear",
+"zebra",
+"giraffe",
+"backpack",
+"umbrella",
+"handbag",
+"tie",
+"suitcase",
+"frisbee",
+"skis",
+"snowboard",
+"sports ball",
+"kite",
+"baseball bat",
+"baseball glove",
+"skateboard",
+"surfboard",
+"tennis racket",
+"bottle",
+"wine glass",
+"cup",
+"fork",
+"knife",
+"spoon",
+"bowl",
+"banana",
+"apple",
+"sandwich",
+"orange",
+"broccoli",
+"carrot",
+"hot dog",
+"pizza",
+"donut",
+"cake",
+"chair",
+"sofa",
+"pottedplant",
+"bed",
+"diningtable",
+"toilet",
+"tvmonitor",
+"laptop",
+"mouse",
+"remote",
+"keyboard",
+"cell phone",
+"microwave",
+"oven",
+"toaster",
+"sink",
+"refrigerator",
+"book",
+"clock",
+"vase",
+"scissors",
+"teddy bear",
+"hair drier",
+"toothbrush"};
 const int num_classes = sizeof(class_labels)/sizeof(class_labels[0]);
 
 cv::Mat input_image;
 
 // define parameters
 const std::string CAMERA_TOPIC_NAME = "/zed/left/image_rect_color";
-const std::string CAMERA_WIDTH_PARAM = "672";  //672*376
-const std::string CAMERA_HEIGHT_PARAM = "376";
+
 const std::string OPENCV_WINDOW = "YOLO object detection";
-int FRAME_W;
-int FRAME_H;
+//Zed is run in VGA mode with the following resolution
+// const std::string CAMERA_WIDTH_PARAM = "/zed/image_width";
+// const std::string CAMERA_HEIGHT_PARAM = "/zed/image_height";
+int FRAME_W = 672;
+int FRAME_H = 376;
 int FRAME_AREA;
 int FRAME_COUNT = 0;
 
@@ -212,9 +293,6 @@ private:
 int main(int argc, char** argv)
 {
    ros::init(argc, argv, "ROS_interface");
-
-   ros::param::get(CAMERA_WIDTH_PARAM, FRAME_W);
-   ros::param::get(CAMERA_HEIGHT_PARAM, FRAME_H);
 
    load_net(cfg, weights, thresh, 0.5);
 
