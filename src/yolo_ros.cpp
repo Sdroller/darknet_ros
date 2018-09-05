@@ -31,7 +31,8 @@ float thresh = 0.5;
 // const std::string class_labels[] = { "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat",
 // 		     	             "chair", "cow", "dining table", "dog", "horse", "motorbike", "person",
 // 		                     "potted plant", "sheep", "sofa", "train", "tv monitor" };
-const std::string class_labels[] = { "person", "bicycle",
+const std::string class_labels[] = { "person",
+"bicycle",
 "car",
 "motorbike",
 "aeroplane",
@@ -109,7 +110,8 @@ const std::string class_labels[] = { "person", "bicycle",
 "scissors",
 "teddy bear",
 "hair drier",
-"toothbrush"};
+"toothbrush"
+};
 const int num_classes = sizeof(class_labels)/sizeof(class_labels[0]);
 
 cv::Mat input_image;

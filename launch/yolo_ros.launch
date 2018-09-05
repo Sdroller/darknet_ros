@@ -1,4 +1,6 @@
 <launch>
-   <include file="$(find darknet_ros)/launch/usb_cam.launch"/>
+  <param name="config_file_path" type="string" value="$(find darknet_ros)/weights/yolov2-tiny.cfg" />
+  <param name="weight_file_path" type="string" value="$(find darknet_ros)/weights/yolov2-tiny.weights" />
+
    <node pkg="darknet_ros" type="yolo_ros" name="yolo_ros"/>
 </launch>
