@@ -27,6 +27,7 @@ int get_obj_count();
 char *cfg = "/home/nvidia/catkin-ws/src/darknet_ros/weights/yolov2-tiny.cfg";
 char *weights = "/home/nvidia/catkin-ws/src/darknet_ros/weights/yolov2-tiny.weights";
 float thresh = 0.5;
+bool display_pred_in_window = false;
 
 // const std::string class_labels[] = { "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat",
 // 		     	             "chair", "cow", "dining table", "dog", "horse", "motorbike", "person",
@@ -142,6 +143,7 @@ class yoloObjectDetector
    ros::NodeHandle _nh;
    image_transport::ImageTransport _it;
    image_transport::Subscriber _image_sub;
+   image_transport::Publisher _yolo_bbox_disp_pub;
    ros::Publisher _found_object_pub;
    ros::Publisher _bboxes_pub;
    //std::vector< std::vector<PredBox> > _class_bboxes;
@@ -164,12 +166,21 @@ public:
       _found_object_pub = _nh.advertise<std_msgs::Int8>("found_object", 1);
       _bboxes_pub = _nh.advertise<darknet_ros::bbox_array>("YOLO_bboxes", 1);
 
-      cv::namedWindow(OPENCV_WINDOW, cv::WINDOW_NORMAL);
+      _yolo_bbox_disp_pub = _it.advertise("img_with_bounding_boxes", 1);
+
+      if(display_pred_in_window)
+      {
+          cv::namedWindow(OPENCV_WINDOW, cv::WINDOW_NORMAL);
+      }
+
    }
 
    ~yoloObjectDetector()
    {
-      cv::destroyWindow(OPENCV_WINDOW);
+      if(display_pred_in_window)
+      {
+          cv::destroyWindow(OPENCV_WINDOW);
+      }
    }
 
 private:
@@ -258,8 +269,13 @@ private:
       //   _class_obj_count[i] = 0;
       //}
 
-      cv::imshow(OPENCV_WINDOW, input_frame);
-      cv::waitKey(3);
+      if(display_pred_in_window)
+      {
+        cv::imshow(OPENCV_WINDOW, input_frame);
+        cv::waitKey(3);
+      }
+      sensor_msgs::ImagePtr yolo_bbox_disp_msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", input_frame).toImageMsg();
+      _yolo_bbox_disp_pub.publish(yolo_bbox_disp_msg);
    }
 
    void cameraCallback(const sensor_msgs::ImageConstPtr& msg)
@@ -295,6 +311,9 @@ private:
 int main(int argc, char** argv)
 {
    ros::init(argc, argv, "ROS_interface");
+   ros::NodeHandle nh;
+
+   nh.getParam("display_pred_in_window", display_pred_in_window);
 
    load_net(cfg, weights, thresh, 0.5);
 
