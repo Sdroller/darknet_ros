@@ -2,9 +2,9 @@
   <param name="config_file_path" type="string" value="$(find darknet_ros)/weights/yolov2-tiny.cfg" />
   <param name="weight_file_path" type="string" value="$(find darknet_ros)/weights/yolov2-tiny.weights" />
 
-  <arg name="print_vesc_fps"  default="false" />
+  <arg name="print_fps"  default="false" />
 
-  <node if="$(arg print_vesc_fps)" pkg="darknet_ros" type="yolo_ros" name="yolo_ros" output="screen" respawn="true"/>
+  <node if="$(arg print_fps)" pkg="darknet_ros" type="yolo_ros" name="yolo_ros" output="screen" respawn="true"/>
 
-  <node unless="$(arg print_vesc_fps)" pkg="darknet_ros" type="yolo_ros" name="yolo_ros" respawn="true"/>
+  <node unless="$(arg print_fps)" pkg="darknet_ros" type="yolo_ros" name="yolo_ros" respawn="true"/>
 </launch>
